@@ -1,0 +1,31 @@
+{
+  "parser": "babel-eslint",
+
+  "parserOptions": {
+    "allowImportExportEverywhere": true
+  },
+
+  "settings": {
+    "import/resolver": "meteor"
+  },
+
+  "extends": [
+    "eslint:recommended",
+    "plugin:meteor/recommended"
+  ],
+
+  "plugins": [
+    "chai-expect",
+    "meteor"
+  ],
+
+  "globals": {
+    "Meteor": 1,
+  },
+
+  "rules": {
+    "chai-expect/missing-assertion": 2,
+    "chai-expect/terminating-properties": 1,
+    "arrow-body-style": [0, "never"]
+  },
+}
