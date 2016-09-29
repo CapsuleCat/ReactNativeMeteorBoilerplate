@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-const { bool, func, object, shape, string } = PropTypes;
+const { bool, func, object, oneOfType, shape, string } = PropTypes;
 
 // Task component - represents a single todo item
 export default class Task extends Component {
@@ -8,7 +8,7 @@ export default class Task extends Component {
     onDelete: func.isRequired,
     onToggleCompleted: func.isRequired,
     task: shape({
-      _id: object,
+      _id: oneOfType([object, string]),
       checked: bool,
       text: string,
     }).isRequired,
@@ -23,16 +23,16 @@ export default class Task extends Component {
 
   handleToggleCompleted = () => {
     const { task } = this.props;
-    const { _id, checked } = task;
-    this.props.onToggleCompleted(_id, checked);
+    const { _id, completed } = task;
+    this.props.onToggleCompleted(_id, completed);
   }
 
   render() {
     const { task } = this.props;
-    const { checked } = task;
+    const { completed } = task;
 
     return (
-      <li className={`${checked ? 'checked' : ''}`}>
+      <li className={`${completed ? 'checked' : ''}`}>
         <button
           className="delete"
           onClick={this.handleDeleteTask}
@@ -41,13 +41,13 @@ export default class Task extends Component {
         </button>
 
         <input
-          checked={checked}
+          checked={completed}
           onClick={this.handleToggleCompleted}
           readOnly
           type="checkbox"
         />
 
-      <span className="text">{this.props.task.text}</span>
+        <span className="text">{this.props.task.text}</span>
       </li>
     );
   }

@@ -3,14 +3,14 @@ import React, { Component, PropTypes } from 'react';
 import Task from './Task';
 
 
-const { arrayOf, func, object, shape } = PropTypes;
+const { arrayOf, func, object, oneOfType, shape, string } = PropTypes;
 
 export default class Tasks extends Component {
   static propTypes = {
     onDelete: func.isRequired,
     onToggleCompleted: func.isRequired,
     tasks: arrayOf(shape({
-      _id: object,
+      _id: oneOfType([string, object]),
     })),
   }
 
