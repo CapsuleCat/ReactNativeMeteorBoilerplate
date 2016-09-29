@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 
 import Filters from './Filters';
 import Form from './Form';
@@ -72,18 +73,14 @@ const getSelectors = (filter) => {
 const mapDataToProps = ({ filter }) => {
   return {
     handleToggleCompleted: (id, completed) => {
-      Tasks.update(id, {
-        $set: { completed: !completed }
-      })
+      Meteor.call('tasks.setCompleted', id, !completed);
+
     },
     handleDelete: (id) => {
-      Tasks.remove(id);
+      Meteor.call('tasks.remove', id);
     },
     handleSubmit: (text) => {
-      return Tasks.insert({
-        text,
-        createdAt: new Date(),
-      });
+      Meteor.call('tasks.insert', text);
     },
     tasks: Tasks.find(getSelectors(filter), {
       sort: { createdAt: -1 }
