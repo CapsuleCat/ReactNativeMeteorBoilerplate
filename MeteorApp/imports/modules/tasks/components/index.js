@@ -71,6 +71,8 @@ const getSelectors = (filter) => {
 };
 
 const mapDataToProps = ({ filter }) => {
+  Meteor.subscribe('tasks');
+
   return {
     handleToggleCompleted: (id, completed) => {
       Meteor.call('tasks.setCompleted', id, !completed);
