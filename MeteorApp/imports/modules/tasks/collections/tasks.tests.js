@@ -6,6 +6,7 @@ import { Tasks } from './tasks.js';
 const { describe, it, beforeEach } = global;
 
 if (Meteor.isServer) {
+  // Tests
   describe('Tasks', () => {
     describe('methods', () => {
       let createdId;

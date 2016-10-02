@@ -18,7 +18,7 @@ export default class Tasks extends Component {
     const { onDelete, onToggleCompleted, tasks } = this.props;
 
     return (
-      <ul>
+      <ul className="tasks">
         {
           tasks.map(t =>
             <Task

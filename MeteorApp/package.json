@@ -5,8 +5,11 @@
     "start": "meteor run",
     "lint": "eslint .",
     "pretest": "npm run lint --silent",
-    "watch-test": "meteor test --driver-package practicalmeteor:mocha --port 9999",
-    "tests": "meteor test --once --driver-package dispatch:mocha-phantomjs"
+    "predeploy": "meteor npm prune",
+    "tests-watch": "meteor test --driver-package practicalmeteor:mocha --port 9999",
+    "tests": "meteor test --once --driver-package dispatch:mocha-phantomjs",
+    "chimp-watch": "chimp --ddp=http://localhost:3000 --watch --mocha --path=tests",
+    "chimp-test": "chimp --ddp=http://localhost:3000 --mocha --path=tests --browser=phantomjs"
   },
   "dependencies": {
     "meteor-node-stubs": "~0.2.0",
@@ -25,6 +28,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-2": "^6.13.0",
     "chai": "^3.5.0",
+    "chimp": "^0.41.1",
     "eslint": "^3.6.1",
     "eslint-import-resolver-meteor": "^0.3.3",
     "eslint-plugin-chai-expect": "^1.1.1",
