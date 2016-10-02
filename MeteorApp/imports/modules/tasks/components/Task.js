@@ -32,7 +32,7 @@ export default class Task extends Component {
     const { completed } = task;
 
     return (
-      <li className={`${completed ? 'checked' : ''}`}>
+      <li className={`task ${completed ? 'checked' : ''}`}>
         <button
           className="delete"
           onClick={this.handleDeleteTask}
