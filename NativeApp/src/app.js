@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
 });
 
 const mapMeteorToProps = () => {
-  Meteor.subscribe('items');
+  Meteor.subscribe('tasks');
   return {
-    count: Meteor.collection('items').find().length,
+    count: Meteor.collection('tasks').find().length,
   };
 };
 
-export default createContainer(mapMeteorToProps)(App);
+export default createContainer(mapMeteorToProps, App);
