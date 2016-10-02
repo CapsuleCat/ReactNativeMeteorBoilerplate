@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,7 +9,13 @@ import Meteor, { createContainer } from 'react-native-meteor';
 
 const SERVER_URL = 'ws://localhost:3000/websocket';
 
+const { number } = PropTypes;
+
 class App extends Component {
+  static propTypes = {
+    count: number,
+  }
+
   componentWillMount() {
     Meteor.connect(SERVER_URL);
   }
@@ -17,9 +23,7 @@ class App extends Component {
   handleAddItem() {
     const name = Math.floor(Math.random() * 10);
 
-    Meteor.call('Items.addOne', { name }, (err, res) => {
-      console.log('Items.addOne', err, res);
-    });
+    Meteor.call('Items.addOne', { name });
   }
 
   render() {
@@ -32,7 +36,10 @@ class App extends Component {
         <Text style={styles.instructions}>
           Item Count: {count}
         </Text>
-        <TouchableOpacity style={styles.button} onPress={this.handleAddItem}>
+        <TouchableOpacity
+          onPress={this.handleAddItem}
+          style={styles.button}
+        >
           <Text>Add Item</Text>
         </TouchableOpacity>
       </View>

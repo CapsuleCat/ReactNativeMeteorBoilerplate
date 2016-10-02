@@ -3,11 +3,22 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "lint": "eslint ."
   },
   "dependencies": {
     "react": "15.3.2",
     "react-native": "0.33.0",
     "react-native-meteor": "^1.0.0-rc15"
+  },
+  "devDependencies": {
+    "eslint": "^3.7.0",
+    "eslint-plugin-chai-expect": "^1.1.1",
+    "eslint-plugin-import": "^2.0.0",
+    "eslint-plugin-no-empty-blocks": "0.0.2",
+    "eslint-plugin-no-use-extend-native": "^0.3.8",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-react": "^6.3.0",
+    "eslint-plugin-react-native": "^2.0.0"
   }
 }
