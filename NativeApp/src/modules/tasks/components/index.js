@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createContainer } from 'meteor/react-meteor-data';
-import { Meteor } from 'meteor/meteor';
+import Meteor, { createContainer } from 'react-native-meteor';
+import { View, Text } from 'react-native';
 
 import Filters from './Filters';
 import Form from './Form';
 import { default as TaskList } from './Tasks';
-import { Tasks } from '../collections/tasks';
 import { setFilter } from '../actions';
 import { SHOW_COMPLETED, SHOW_ACTIVE, SHOW_ALL } from '../constants';
 
@@ -37,25 +36,25 @@ class TaskIndex extends Component {
     } = this.props;
 
     return (
-      <div className="container">
-        <header>
-          <h1>Todo List ({incompleteCount})</h1>
+      <View>
+        <View>
+          <Text>Todo List ({incompleteCount})</Text>
 
-          <Filters
-            filter={filter}
-            onSetFilter={handleSetFilter}
-          />
+            <Filters
+              filter={filter}
+              onSetFilter={handleSetFilter}
+            />
 
-          <Form onSubmit={handleSubmit} />
-        </header>
+            <Form onSubmit={handleSubmit} />
+        </View>
 
         <TaskList
           onDelete={handleDelete}
           onToggleCompleted={handleToggleCompleted}
           tasks={tasks}
         />
-      </div>
-    );
+      </View>
+    )
   }
 }
 
@@ -73,6 +72,7 @@ const getSelectors = (filter) => {
 
 const mapDataToProps = ({ filter }) => {
   Meteor.subscribe('tasks');
+  const Tasks = Meteor.collection('tasks');
 
   return {
     handleToggleCompleted: (id, completed) => {
@@ -87,10 +87,11 @@ const mapDataToProps = ({ filter }) => {
     },
     tasks: Tasks.find(getSelectors(filter), {
       sort: { createdAt: -1 }
-    }).fetch(),
-    incompleteCount: Tasks.find(getSelectors('SHOW_ACTIVE')).count(),
+    }),
+    incompleteCount: Tasks.find(getSelectors('SHOW_ACTIVE')).length,
   }
 };
+
 
 const mapStateToProps = (state) => {
   const { filter } = state.tasks;

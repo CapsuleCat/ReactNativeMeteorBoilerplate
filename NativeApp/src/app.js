@@ -1,80 +1,22 @@
-import React, { Component, PropTypes } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
-import Meteor, { createContainer } from 'react-native-meteor';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
 
-const SERVER_URL = 'ws://localhost:3000/websocket';
+import taskReducer from './modules/tasks/reducers';
+import App from './modules/app/components/App';
 
-const { number } = PropTypes;
-
-class App extends Component {
-  static propTypes = {
-    count: number,
+const store = createStore(combineReducers(
+  {
+    tasks: taskReducer,
   }
+));
 
-  componentWillMount() {
-    Meteor.connect(SERVER_URL);
-  }
-
-  handleAddItem() {
-    const name = Math.floor(Math.random() * 10);
-
-    Meteor.call('Items.addOne', { name });
-  }
-
+export default class Index extends Component {
   render() {
-    const { count } = this.props;
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native + Meteor!
-        </Text>
-        <Text style={styles.instructions}>
-          Item Count: {count}
-        </Text>
-        <TouchableOpacity
-          onPress={this.handleAddItem}
-          style={styles.button}
-        >
-          <Text>Add Item</Text>
-        </TouchableOpacity>
-      </View>
+      <Provider store={store}>
+        <App />
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  button: {
-    padding: 10,
-    backgroundColor: '#c5c5c5',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
-
-const mapMeteorToProps = () => {
-  Meteor.subscribe('tasks');
-  return {
-    count: Meteor.collection('tasks').find().length,
-  };
-};
-
-export default createContainer(mapMeteorToProps, App);

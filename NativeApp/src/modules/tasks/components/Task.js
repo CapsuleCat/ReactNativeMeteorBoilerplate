@@ -1,4 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import { Text, View } from 'react-native';
+import {
+  MKButton,
+  MKCheckbox
+} from 'react-native-material-kit';
 
 const { bool, func, object, oneOfType, shape, string } = PropTypes;
 
@@ -32,23 +37,20 @@ export default class Task extends Component {
     const { completed } = task;
 
     return (
-      <li className={`task ${completed ? 'checked' : ''}`}>
-        <button
-          className="delete"
-          onClick={this.handleDeleteTask}
+      <View>
+        <MKButton
+          onPress={this.handleDeleteTask}
         >
-          &times;
-        </button>
+          <Text pointerEvents="none">&times;</Text>
+        </MKButton>
 
-        <input
+        <MKCheckbox
           checked={completed}
-          onClick={this.handleToggleCompleted}
-          readOnly
-          type="checkbox"
+          onCheckedChange={this.handleToggleCompleted}
         />
 
-        <span className="text">{task.text}</span>
-      </li>
+        <Text>{task.text}</Text>
+      </View>
     );
   }
 }
