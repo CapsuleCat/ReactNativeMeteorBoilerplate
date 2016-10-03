@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Meteor, { createContainer } from 'react-native-meteor';
 import { View, Text } from 'react-native';
 
+import styles from '../../app/styles';
 import Filters from './Filters';
 import Form from './Form';
 import { default as TaskList } from './Tasks';
@@ -37,15 +38,23 @@ class TaskIndex extends Component {
 
     return (
       <View>
-        <View>
-          <Text>Todo List ({incompleteCount})</Text>
+        <View style={[styles.row, styles.header]}>
+          <View style={styles.col}>
+            <Text style={styles.headerText}>
+              Todo List ({incompleteCount})
+            </Text>
+          </View>
 
+          <View style={styles.col}>
             <Filters
               filter={filter}
               onSetFilter={handleSetFilter}
             />
+          </View>
+        </View>
 
-            <Form onSubmit={handleSubmit} />
+        <View>
+          <Form onSubmit={handleSubmit} />
         </View>
 
         <TaskList

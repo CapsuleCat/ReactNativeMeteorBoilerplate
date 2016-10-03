@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
+import styles from '../../app/styles';
 import Task from './Task';
 
 const { arrayOf, func, object, oneOfType, shape, string } = PropTypes;
@@ -18,7 +19,10 @@ export default class Tasks extends Component {
     const { onDelete, onToggleCompleted, tasks } = this.props;
 
     return (
-      <View>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        style={[styles.scrollView, styles.header]}
+      >
         {
           tasks.map(t =>
             <Task
@@ -29,7 +33,7 @@ export default class Tasks extends Component {
             />
           )
         }
-      </View>
+      </ScrollView>
     );
   }
 }

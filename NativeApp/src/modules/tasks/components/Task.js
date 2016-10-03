@@ -1,9 +1,31 @@
 import React, { Component, PropTypes } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import {
   MKButton,
   MKCheckbox
 } from 'react-native-material-kit';
+
+import appStyles from '../../app/styles';
+
+const styles = Object.assign({}, appStyles, StyleSheet.create({
+  taskCheckbox: {
+    flex: -1,
+    justifyContent: 'center',
+    width: 20,
+  },
+  taskText: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  taskTextContent: {
+    textAlign: 'left',
+  },
+  taskButton: {
+    flex: -1,
+    justifyContent: 'center',
+    width: 10,
+  }
+}));
 
 const { bool, func, object, oneOfType, shape, string } = PropTypes;
 
@@ -37,19 +59,27 @@ export default class Task extends Component {
     const { completed } = task;
 
     return (
-      <View>
-        <MKButton
-          onPress={this.handleDeleteTask}
-        >
-          <Text pointerEvents="none">&times;</Text>
-        </MKButton>
+      <View style={styles.row}>
+        <View style={[styles.col, styles.taskCheckbox]}>
+          <MKCheckbox
+            checked={completed}
+            onCheckedChange={this.handleToggleCompleted}
+          />
+        </View>
 
-        <MKCheckbox
-          checked={completed}
-          onCheckedChange={this.handleToggleCompleted}
-        />
+        <View style={[styles.col, styles.taskText]}>
+          <Text style={styles.taskTextContent}>
+            {task.text}
+          </Text>
+        </View>
 
-        <Text>{task.text}</Text>
+        <View style={[styles.col, styles.taskButton]}>
+          <MKButton
+            onPress={this.handleDeleteTask}
+          >
+            <Text pointerEvents="none">&times;</Text>
+          </MKButton>
+        </View>
       </View>
     );
   }

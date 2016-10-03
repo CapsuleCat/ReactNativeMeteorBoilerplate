@@ -9,25 +9,38 @@ export default class Form extends Component {
     onSubmit: func.isRequired,
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  state = {
+    value: '',
+  }
 
-    const value = this.refs.textInput.value;
+  handleChange = (value) => {
+    this.setState({
+      value
+    });
+  }
 
-    this.props.onSubmit(value);
+  handleSubmit = () => {
+    const { value } = this.state;
 
-    this.refs.textInput.value = '';
+    this.setState({
+      value: '',
+    }, () => {
+      this.props.onSubmit(value);
+    });
   }
 
   render() {
+    const { value } = this.state;
     return (
       <View>
         <MKTextField
           blurOnSubmit
+          onChangeText={this.handleChange}
           onSubmitEditing={this.handleSubmit}
           placeholder="Type to add new tasks"
           ref="textInput"
           returnKeyType="done"
+          value={value}
         />
       </View>
     );

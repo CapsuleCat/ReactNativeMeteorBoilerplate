@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 
+import styles from '../styles';
 import TaskIndex from '../../tasks/components';
 import Meteor from 'react-native-meteor';
 
@@ -14,7 +15,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <TaskIndex />
       </View>
     );
